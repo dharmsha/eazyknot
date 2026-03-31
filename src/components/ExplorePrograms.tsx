@@ -1,105 +1,95 @@
 'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowUpRight, Zap, Star, Target, Crown } from 'lucide-react';
+import { ArrowUpRight, Code, Zap } from 'lucide-react';
 
 const programs = [
   {
     title: "Full Stack Development",
-    desc: "Become a 1% Engineer. Master Next.js, Go, and AWS.",
-    size: "md:col-span-2 md:row-span-2",
-    icon: <Zap className="text-yellow-400" />,
-    img: "bg-gradient-to-br from-blue-600/20 to-violet-600/20",
-    tag: "Flagship"
+    desc: "Master the complete ecosystem from frontend to cloud architecture. Build production-ready apps.",
+    tag: "Most Popular",
+    stats: "12 Weeks • 4 Projects",
+    hasIcon: true,
+    icon: <Code size={22} className="text-white" />,
+    bg: "bg-[#0A0A0A]"
   },
   {
-    title: "AI & Prompting",
-    desc: "Build LLMs and AI Agents.",
-    size: "md:col-span-1 md:row-span-1",
-    icon: <Target className="text-red-400" />,
-    img: "bg-gradient-to-br from-orange-500/10 to-red-500/10",
-    tag: "New"
+    title: "AI & Machine Learning",
+    desc: "Deep dive into neural networks and LLM integration. Modern approach to data science.",
+    tag: "New",
+    stats: "8 Weeks • 3 Projects",
+    hasIcon: false, // Second card - No Icon
+    bg: "bg-[#0F1115]"
   },
   {
-    title: "UI/UX Design",
-    desc: "High-end product design.",
-    size: "md:col-span-1 md:row-span-1",
-    icon: <Crown className="text-purple-400" />,
-    img: "bg-gradient-to-br from-purple-500/10 to-blue-500/10",
-    tag: "Creative"
-  },
-  {
-    title: "System Design",
-    desc: "Scale apps to millions of users.",
-    size: "md:col-span-2 md:row-span-1",
-    icon: <Star className="text-emerald-400" />,
-    img: "bg-gradient-to-br from-emerald-500/10 to-cyan-500/10",
-    tag: "Advanced"
+    title: "System Design Pro",
+    desc: "Learn to build systems that scale to millions. High-level architecture for senior roles.",
+    tag: "Advanced",
+    stats: "6 Weeks • Case Studies",
+    hasIcon: true,
+    icon: <Zap size={22} className="text-white" />,
+    bg: "bg-[#0A0A0A]"
   }
 ];
 
-export default function ExplorePrograms() {
+export default function CleanPrograms() {
   return (
-    <section className="py-24 bg-white dark:bg-black overflow-hidden">
-      <div className="max-w-6xl mx-auto px-6">
+    <section className="py-24 bg-[#050505] min-h-screen text-white font-sans">
+      <div className="max-w-7xl mx-auto px-6">
         
-        {/* Minimal Header */}
+        {/* Header - Simple & Bold */}
         <div className="mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-black dark:text-white mb-4">
-            Pick your path.
+          <h2 className="text-4xl md:text-5xl font-medium tracking-tight mb-4">
+            Our Programs
           </h2>
-          <p className="text-gray-500 dark:text-gray-400 text-lg max-w-md font-medium">
-            Curated programs designed for the next generation of tech leaders.
-          </p>
+          <div className="h-1 w-20 bg-blue-600 rounded-full" />
         </div>
 
-        {/* Bento Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[200px]">
-          {programs.map((p, i) => (
+        {/* Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {programs.map((item, idx) => (
             <motion.div
-              key={i}
-              whileHover={{ scale: 0.98 }}
-              className={`group relative overflow-hidden rounded-[2rem] border border-gray-100 dark:border-white/10 p-8 flex flex-col justify-between ${p.size} ${p.img} backdrop-blur-3xl`}
+              key={idx}
+              whileHover={{ y: -5 }}
+              className={`${item.bg} border border-white/10 rounded-2xl p-8 flex flex-col justify-between transition-all duration-300 hover:border-white/20 hover:shadow-[0_10px_40px_-15px_rgba(0,0,0,1)]`}
             >
-              {/* Glow Effect on Hover */}
-              <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-
-              <div className="relative z-10">
-                <div className="flex justify-between items-start">
-                  <div className="p-3 bg-white dark:bg-white/10 rounded-2xl shadow-sm border border-gray-100 dark:border-white/5">
-                    {p.icon}
-                  </div>
-                  <span className="text-[10px] font-black uppercase tracking-widest px-3 py-1 bg-black/5 dark:bg-white/5 rounded-full text-gray-500">
-                    {p.tag}
+              <div>
+                <div className="flex justify-between items-start mb-8">
+                  {/* Icon Condition */}
+                  {item.hasIcon ? (
+                    <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
+                      {item.icon}
+                    </div>
+                  ) : (
+                    <div className="h-12" /> // Spacer if no icon to maintain alignment
+                  )}
+                  
+                  <span className="text-[10px] uppercase tracking-[0.15em] font-bold text-gray-500 border border-white/5 px-3 py-1 rounded-md">
+                    {item.tag}
                   </span>
                 </div>
-                
-                <h3 className="text-2xl font-bold mt-6 text-black dark:text-white tracking-tight">
-                  {p.title}
+
+                <h3 className="text-2xl font-semibold mb-4 tracking-tight">
+                  {item.title}
                 </h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 font-medium max-w-[200px]">
-                  {p.desc}
+                
+                <p className="text-gray-400 leading-relaxed text-sm mb-6">
+                  {item.desc}
                 </p>
               </div>
 
-              {/* Action Button */}
-              <div className="relative z-10 flex items-center justify-between mt-4">
-                <button className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-black dark:text-white group-hover:underline">
-                  Explore <ArrowUpRight size={14} />
+              <div className="pt-6 border-t border-white/5 flex items-center justify-between">
+                <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  {item.stats}
+                </span>
+                
+                <button className="flex items-center gap-2 text-sm font-semibold group">
+                  <span className="group-hover:mr-1 transition-all underline decoration-blue-600/50 underline-offset-4">Details</span>
+                  <ArrowUpRight size={16} className="text-blue-500" />
                 </button>
               </div>
-
-              {/* Decorative Background Shape */}
-              <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-current opacity-[0.03] rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700" />
             </motion.div>
           ))}
-        </div>
-
-        {/* Footer Link */}
-        <div className="mt-12 text-center">
-          <p className="text-gray-400 text-sm font-medium">
-            Not sure? <span className="text-black dark:text-white underline cursor-pointer hover:text-blue-500 transition-colors">Talk to our career counselor</span>
-          </p>
         </div>
       </div>
     </section>
