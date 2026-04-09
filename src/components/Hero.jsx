@@ -48,7 +48,7 @@ export default function GameHero() {
             {/* TRUST BADGE */}
             <div className="mt-10 flex items-center gap-4 justify-center lg:justify-start">
               <Image
-                src="/dk.png"
+                src="/sk.jpeg"
                 alt="Founder"
                 width={55}
                 height={55}
@@ -73,7 +73,7 @@ export default function GameHero() {
             className="lg:w-1/2 flex justify-center"
           >
             <Image
-              src="/dk.png"
+              src="/sk.jpeg"
               alt="Mentor"
               width={550}
               height={550}
