@@ -4,6 +4,7 @@ import LogoSlider from "@/components/LogoSlider" ;
 import ExplorePrograms from "@/components/ExplorePrograms" ;
 import Lerner from "@/components/Lerner";
 import Course from "@/components/Course";
+import Vision  from"@/components/Vision";
 export default function Home() {
   return (
     <>
@@ -12,6 +13,7 @@ export default function Home() {
       <ExplorePrograms />
       <Course />
       <Lerner />
+      <Vision />
     </>
   );
 }
