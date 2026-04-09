@@ -1,13 +1,17 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Search, ChevronDown, Menu, X, User, BookOpen, ChevronRight, LayoutGrid, Award, Rocket, Home } from 'lucide-react';
+import { Search, ChevronDown, Menu, X, User, BookOpen, ChevronRight, LayoutGrid, Award, Rocket, Home, LogOut, Settings, UserCircle } from 'lucide-react';
 import Link from 'next/link';
+import { useAuth } from '@/context/AuthContext';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const { user, logout, loading } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -65,6 +69,11 @@ const Navbar = () => {
       ]
     }
   ];
+
+  const handleLogout = async () => {
+    await logout();
+    setIsProfileOpen(false);
+  };
 
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
@@ -139,7 +148,7 @@ const Navbar = () => {
                 placeholder="Search Skills, Courses..." 
                 className="w-full bg-[#2a2d31] text-sm pl-4 pr-12 py-2.5 rounded-lg border border-transparent focus:border-blue-500 focus:bg-white focus:text-black outline-none transition-all duration-300"
               />
-              <div className="absolute right-0 top-0 bottom-0 bg-blue-600 px-4 flex items-center rounded-r-lg group-hover:bg-blue-500 transition-colors">
+              <div className="absolute right-0 top-0 bottom-0 bg-blue-600 px-4 flex items-center rounded-r-lg group-hover:bg-blue-500 transition-colors cursor-pointer">
                 <Search size={18} />
               </div>
             </div>
@@ -149,12 +158,66 @@ const Navbar = () => {
           <div className="hidden lg:flex items-center gap-6">
             <Link href="/corporate-training" className="text-[12px] font-bold text-gray-400 hover:text-white uppercase tracking-widest transition-colors">Corporate</Link>
             <div className="h-6 w-[1px] bg-gray-700"></div>
-            <div className="flex items-center gap-3">
-              <Link href="/login" className="text-sm font-bold px-4 py-2 hover:text-blue-400 transition-colors">Log In</Link>
-              <Link href="/register" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg text-sm font-bold shadow-lg shadow-blue-600/20 transition-all hover:scale-105 active:scale-95">
-                Join Free
-              </Link>
-            </div>
+            
+            {!loading && (
+              <>
+                {user ? (
+                  // User Logged In
+                  <div className="relative">
+                    <button 
+                      onClick={() => setIsProfileOpen(!isProfileOpen)}
+                      className="flex items-center gap-3 hover:bg-gray-800/50 px-3 py-2 rounded-lg transition-all"
+                    >
+                      {user.photo ? (
+                        <img src={user.photo} alt={user.name} className="w-8 h-8 rounded-full border-2 border-blue-500" />
+                      ) : (
+                        <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center">
+                          <span className="text-sm font-bold">{user.name?.[0] || 'U'}</span>
+                        </div>
+                      )}
+                      <span className="text-sm font-medium">{user.name?.split(' ')[0]}</span>
+                      <ChevronDown size={14} className={`transition-transform ${isProfileOpen ? 'rotate-180' : ''}`} />
+                    </button>
+
+                    {/* Profile Dropdown */}
+                    <AnimatePresence>
+                      {isProfileOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          className="absolute right-0 mt-2 w-64 bg-[#1a1c1e] border border-gray-800 rounded-xl shadow-2xl overflow-hidden"
+                        >
+                          <div className="p-4 border-b border-gray-800">
+                            <p className="font-semibold text-white">{user.name}</p>
+                            <p className="text-sm text-gray-400">{user.email}</p>
+                          </div>
+                          <div className="p-2">
+                            <Link href="/dashboard" onClick={() => setIsProfileOpen(false)} className="flex items-center gap-3 px-3 py-2 text-gray-300 hover:bg-gray-800 rounded-lg transition-colors">
+                              <LayoutGrid size={16} /> Dashboard
+                            </Link>
+                            <Link href="/profile" onClick={() => setIsProfileOpen(false)} className="flex items-center gap-3 px-3 py-2 text-gray-300 hover:bg-gray-800 rounded-lg transition-colors">
+                              <Settings size={16} /> Settings
+                            </Link>
+                            <button onClick={handleLogout} className="w-full flex items-center gap-3 px-3 py-2 text-red-400 hover:bg-red-500/10 rounded-lg transition-colors">
+                              <LogOut size={16} /> Logout
+                            </button>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ) : (
+                  // User Not Logged In
+                  <div className="flex items-center gap-3">
+                    <Link href="/login" className="text-sm font-bold px-4 py-2 hover:text-blue-400 transition-colors">Log In</Link>
+                    <Link href="/register" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg text-sm font-bold shadow-lg shadow-blue-600/20 transition-all hover:scale-105 active:scale-95">
+                      Join Free
+                    </Link>
+                  </div>
+                )}
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -164,7 +227,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* --- Mobile Sidebar --- */}
+      {/* Mobile Sidebar */}
       <div className={`fixed inset-0 bg-black/90 backdrop-blur-lg z-[60] lg:hidden transition-all duration-500 ${isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
         <div className={`fixed top-0 left-0 h-full w-[85%] bg-[#0f1012] p-8 transform transition-transform duration-500 border-r border-gray-800 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
           <div className="flex justify-between items-center mb-10">
@@ -172,7 +235,24 @@ const Navbar = () => {
             <X size={28} onClick={() => setIsMobileMenuOpen(false)} className="text-gray-500 hover:text-white transition-colors cursor-pointer" />
           </div>
 
-          <div className="space-y-8 overflow-y-auto max-h-[70vh] pr-2">
+          {/* Mobile User Info */}
+          {user && (
+            <div className="flex items-center gap-3 mb-8 p-4 bg-gray-800/50 rounded-xl">
+              {user.photo ? (
+                <img src={user.photo} alt={user.name} className="w-12 h-12 rounded-full" />
+              ) : (
+                <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center">
+                  <span className="text-xl font-bold">{user.name?.[0] || 'U'}</span>
+                </div>
+              )}
+              <div>
+                <p className="font-semibold">{user.name}</p>
+                <p className="text-sm text-gray-400">{user.email}</p>
+              </div>
+            </div>
+          )}
+
+          <div className="space-y-8 overflow-y-auto max-h-[60vh] pr-2">
             {/* Mobile Home Link */}
             <Link 
               href="/" 
@@ -205,8 +285,17 @@ const Navbar = () => {
           </div>
 
           <div className="absolute bottom-8 left-8 right-8 flex flex-col gap-4">
-            <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="w-full py-4 border border-gray-700 rounded-xl font-bold text-center hover:bg-gray-800 transition-all">Log In</Link>
-            <Link href="/register" onClick={() => setIsMobileMenuOpen(false)} className="w-full py-4 bg-blue-600 rounded-xl font-bold text-center shadow-xl shadow-blue-600/20">Join For Free</Link>
+            {user ? (
+              <>
+                <Link href="/dashboard" onClick={() => setIsMobileMenuOpen(false)} className="w-full py-4 bg-blue-600 rounded-xl font-bold text-center shadow-xl shadow-blue-600/20">Dashboard</Link>
+                <button onClick={() => { handleLogout(); setIsMobileMenuOpen(false); }} className="w-full py-4 border border-red-600 text-red-400 rounded-xl font-bold text-center hover:bg-red-600/10 transition-all">Logout</button>
+              </>
+            ) : (
+              <>
+                <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="w-full py-4 border border-gray-700 rounded-xl font-bold text-center hover:bg-gray-800 transition-all">Log In</Link>
+                <Link href="/register" onClick={() => setIsMobileMenuOpen(false)} className="w-full py-4 bg-blue-600 rounded-xl font-bold text-center shadow-xl shadow-blue-600/20">Join For Free</Link>
+              </>
+            )}
           </div>
         </div>
       </div>
