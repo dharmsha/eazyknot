@@ -18,12 +18,25 @@ import {
   Award,
   TrendingUp
 } from "lucide-react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 
 const WHATSAPP_NUMBER = "916200453132";
 
-const courses = [
+// Type definitions
+interface Course {
+  id: number;
+  title: string;
+  duration: string;
+  lessons: string;
+  students: string;
+  rating: string;
+  tag: string;
+  icon: React.ElementType;
+  jobs: string;
+  salary: string;
+}
+
+const courses: Course[] = [
   // Frontend Development
   {
     id: 1,
@@ -404,9 +417,9 @@ const courses = [
 ];
 
 export default function JobOrientedSlider() {
-  const scrollRef = useRef(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState<boolean>(true);
 
   // Auto-slide every 3 seconds
   useEffect(() => {
@@ -419,14 +432,14 @@ export default function JobOrientedSlider() {
     return () => clearInterval(interval);
   }, [isAutoPlaying, currentIndex]);
 
-  const scroll = (direction) => {
+  const scroll = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
 
     const scrollAmount = 360;
     const currentScroll = scrollRef.current.scrollLeft;
     const maxScroll = scrollRef.current.scrollWidth - scrollRef.current.clientWidth;
     
-    let newScroll;
+    let newScroll: number;
     if (direction === "left") {
       newScroll = Math.max(0, currentScroll - scrollAmount);
       setCurrentIndex(Math.max(0, currentIndex - 1));
@@ -440,17 +453,44 @@ export default function JobOrientedSlider() {
       behavior: "smooth",
     });
     
+    // Reset auto-play timer on manual scroll
     setIsAutoPlaying(false);
     setTimeout(() => setIsAutoPlaying(true), 10000);
   };
 
-  const openWhatsApp = (courseTitle) => {
+  const goToSlide = (index: number) => {
+    if (scrollRef.current) {
+      const scrollAmount = 360;
+      scrollRef.current.scrollTo({
+        left: scrollAmount * index,
+        behavior: "smooth",
+      });
+      setCurrentIndex(index);
+      setIsAutoPlaying(false);
+      setTimeout(() => setIsAutoPlaying(true), 10000);
+    }
+  };
+
+  const openWhatsApp = (courseTitle: string) => {
     const message = `Hello, I want to know more about the "${courseTitle}" course. Please provide details about job placement.`;
     const encodedMessage = encodeURIComponent(message);
     window.open(
       `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`,
       "_blank"
     );
+  };
+
+  const getTagColor = (tag: string): string => {
+    switch (tag) {
+      case 'Bestseller':
+        return 'bg-green-600';
+      case 'Top Rated':
+        return 'bg-blue-600';
+      case 'Popular':
+        return 'bg-gray-600';
+      default:
+        return 'bg-gray-700';
+    }
   };
 
   return (
@@ -479,6 +519,7 @@ export default function JobOrientedSlider() {
         <button
           onClick={() => scroll("left")}
           className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-10 bg-white p-2 md:p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+          aria-label="Previous slide"
         >
           <ChevronLeft className="w-5 h-5 text-gray-700" />
         </button>
@@ -486,6 +527,7 @@ export default function JobOrientedSlider() {
         <button
           onClick={() => scroll("right")}
           className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10 bg-white p-2 md:p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+          aria-label="Next slide"
         >
           <ChevronRight className="w-5 h-5 text-gray-700" />
         </button>
@@ -507,18 +549,13 @@ export default function JobOrientedSlider() {
                 whileHover={{ y: -8 }}
                 className="min-w-[300px] md:min-w-[340px] bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
               >
-                {/* Icon Header - No Orange */}
+                {/* Icon Header */}
                 <div className="relative bg-gray-800 p-4 flex items-center justify-between">
                   <div className="w-12 h-12 rounded-xl bg-gray-700 flex items-center justify-center">
                     <IconComponent className="w-6 h-6 text-gray-300" />
                   </div>
                   
-                  <span className={`text-white text-xs px-2 py-1 rounded-full ${
-                    course.tag === 'Bestseller' ? 'bg-green-600' :
-                    course.tag === 'Top Rated' ? 'bg-blue-600' :
-                    course.tag === 'Popular' ? 'bg-gray-600' :
-                    'bg-gray-700'
-                  }`}>
+                  <span className={`text-white text-xs px-2 py-1 rounded-full ${getTagColor(course.tag)}`}>
                     {course.tag}
                   </span>
                 </div>
@@ -532,15 +569,15 @@ export default function JobOrientedSlider() {
                   <div className="flex justify-between text-xs text-gray-500 mb-2">
                     <div className="flex items-center gap-1">
                       <Users size={14} />
-                      {course.students}
+                      <span>{course.students}</span>
                     </div>
                     <div className="flex items-center gap-1">
                       <Clock size={14} />
-                      {course.duration}
+                      <span>{course.duration}</span>
                     </div>
                     <div className="flex items-center gap-1">
                       <Star size={14} className="text-yellow-500 fill-yellow-500" />
-                      {course.rating}
+                      <span>{course.rating}</span>
                     </div>
                   </div>
                   
@@ -578,6 +615,22 @@ export default function JobOrientedSlider() {
               </motion.div>
             );
           })}
+        </div>
+
+        {/* Dots Indicator */}
+        <div className="flex justify-center gap-2 mt-6 flex-wrap">
+          {courses.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                Math.abs(currentIndex - index) < 2
+                  ? 'bg-gray-800 w-6'
+                  : 'bg-gray-300 w-2'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
         </div>
 
         {/* View All Button */}
