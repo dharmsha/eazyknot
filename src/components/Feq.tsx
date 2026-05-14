@@ -56,11 +56,11 @@ export default function FAQPage() {
   );
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white overflow-hidden">
+    <div className="relative min-h-screen bg-white text-gray-900 overflow-hidden">
 
-      {/* Background Glow Effects */}
-      <div className="absolute w-96 h-96 bg-purple-600/20 blur-[120px] rounded-full top-20 left-10"></div>
-      <div className="absolute w-96 h-96 bg-blue-600/20 blur-[120px] rounded-full bottom-20 right-10"></div>
+      {/* Background Glow Effects - subtle for white bg */}
+      <div className="absolute w-96 h-96 bg-purple-400/10 blur-[120px] rounded-full top-20 left-10"></div>
+      <div className="absolute w-96 h-96 bg-blue-400/10 blur-[120px] rounded-full bottom-20 right-10"></div>
 
       <div className="relative z-10 max-w-4xl mx-auto px-6 py-24">
 
@@ -71,16 +71,16 @@ export default function FAQPage() {
           transition={{ duration: 0.6 }}
           className="text-center mb-14"
         >
-          <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full mb-4 backdrop-blur-md">
-            <HelpCircle className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm text-yellow-300 font-medium">FAQ</span>
+          <div className="inline-flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full mb-4">
+            <HelpCircle className="w-4 h-4 text-yellow-500" />
+            <span className="text-sm text-yellow-600 font-medium">FAQ</span>
           </div>
 
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 bg-gradient-to-r from-yellow-500 via-orange-500 to-pink-500 bg-clip-text text-transparent">
             Frequently Asked Questions
           </h1>
 
-          <p className="text-gray-400 text-sm md:text-base">
+          <p className="text-gray-500 text-sm md:text-base">
             Everything you need to know about our courses & support.
           </p>
         </motion.div>
@@ -93,7 +93,7 @@ export default function FAQPage() {
             placeholder="Search your question..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl backdrop-blur-md focus:ring-2 focus:ring-yellow-500 outline-none transition"
+            className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition text-gray-900 placeholder-gray-400"
           />
         </div>
 
@@ -105,13 +105,13 @@ export default function FAQPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="bg-white/5 border border-white/10 rounded-2xl backdrop-blur-xl overflow-hidden hover:shadow-lg hover:shadow-yellow-500/10 transition-all"
+              className="bg-gray-50 border border-gray-200 rounded-2xl overflow-hidden hover:shadow-lg hover:shadow-yellow-500/10 transition-all"
             >
               <button
                 onClick={() => toggleFAQ(faq.id)}
                 className="w-full flex justify-between items-center p-5 text-left"
               >
-                <span className="font-medium text-base md:text-lg">
+                <span className="font-medium text-base md:text-lg text-gray-900">
                   {faq.question}
                 </span>
 
@@ -119,7 +119,7 @@ export default function FAQPage() {
                   animate={{ rotate: activeId === faq.id ? 180 : 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <ChevronDown className="w-5 h-5 text-yellow-400" />
+                  <ChevronDown className="w-5 h-5 text-yellow-500" />
                 </motion.div>
               </button>
 
@@ -132,7 +132,7 @@ export default function FAQPage() {
                     transition={{ duration: 0.3 }}
                     className="overflow-hidden"
                   >
-                    <div className="px-5 pb-5 text-gray-400 text-sm md:text-base leading-relaxed border-t border-white/10">
+                    <div className="px-5 pb-5 text-gray-600 text-sm md:text-base leading-relaxed border-t border-gray-200">
                       {faq.answer}
                     </div>
                   </motion.div>
@@ -148,20 +148,20 @@ export default function FAQPage() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mt-20 text-center bg-gradient-to-r from-yellow-500/10 to-pink-500/10 p-8 rounded-3xl border border-white/10 backdrop-blur-xl"
+          className="mt-20 text-center bg-gradient-to-r from-yellow-50 to-pink-50 p-8 rounded-3xl border border-gray-200"
         >
-          <h3 className="text-2xl font-bold mb-3">
+          <h3 className="text-2xl font-bold mb-3 text-gray-900">
             Still Have Questions?
           </h3>
 
-          <p className="text-gray-400 mb-6 text-sm md:text-base">
+          <p className="text-gray-500 mb-6 text-sm md:text-base">
             Our team is always ready to help you.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/contact"
-              className="px-6 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full font-semibold hover:scale-105 transition"
+              className="px-6 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full font-semibold text-white hover:scale-105 transition shadow-md hover:shadow-yellow-500/30"
             >
               <MessageCircle className="inline w-4 h-4 mr-2" />
               Contact Support
@@ -170,7 +170,7 @@ export default function FAQPage() {
             <a
               href="https://wa.me/916200453132"
               target="_blank"
-              className="px-6 py-3 bg-green-500 rounded-full font-semibold hover:scale-105 transition"
+              className="px-6 py-3 bg-green-500 rounded-full font-semibold text-white hover:scale-105 transition shadow-md hover:shadow-green-500/30"
             >
               <Phone className="inline w-4 h-4 mr-2" />
               WhatsApp Us

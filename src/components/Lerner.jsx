@@ -51,9 +51,9 @@ const benefits = [
 ];
 
 const colorMap = {
-  yellow: "from-yellow-400 to-orange-500",
-  blue: "from-blue-400 to-cyan-500",
-  emerald: "from-emerald-400 to-teal-500"
+  yellow: "from-yellow-500 to-orange-500",
+  blue: "from-blue-500 to-cyan-500",
+  emerald: "from-emerald-500 to-teal-500"
 };
 
 export default function LearnerBenefits() {
@@ -87,7 +87,7 @@ export default function LearnerBenefits() {
               transition={{ duration: 0.6, delay: idx * 0.15 }}
               viewport={{ once: true }}
               whileHover={{ y: -10 }}
-              className="group relative rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 bg-white"
+              className="group relative rounded-3xl p-8 border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-500 bg-white"
             >
               {/* Gradient Top Line */}
               <div className={`absolute top-0 left-0 w-full h-1 rounded-t-3xl bg-gradient-to-r ${colorMap[benefit.color]}`} />
@@ -131,7 +131,7 @@ export default function LearnerBenefits() {
             <motion.div
               key={i}
               whileHover={{ scale: 1.05 }}
-              className="p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition"
+              className="p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition bg-white"
             >
               <div className="text-3xl font-bold text-gray-900">
                 {stat.value}
