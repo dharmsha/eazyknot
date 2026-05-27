@@ -22,7 +22,7 @@ export default function RootLayout({
         <Navbar />
 
         {/* Page Content yahan load hoga */}
-        <main className="min-h-screen pt-20">
+        <main className="min-h-screen pt-0">
           {children}
         </main>
 

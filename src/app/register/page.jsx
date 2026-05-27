@@ -87,9 +87,10 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 pt-0 sm:pt-18 lg:pt-20">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
-    <div className="grid lg:grid-cols-2 gap-12 items-center">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 pt-16 lg:pt-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          
           {/* Left Side - Info */}
           <motion.div 
             initial={{ opacity: 0, x: -50 }}
@@ -367,7 +368,7 @@ const RegisterPage = () => {
                 </button>
               </form>
 
-              <div className="mt-6 text-center lg:hidden">
+              <div className="mt-6 text-center">
                 <p className="text-sm text-gray-500">
                   Already have an account?{' '}
                   <Link href="/login" className="text-blue-600 font-semibold hover:text-blue-700">
