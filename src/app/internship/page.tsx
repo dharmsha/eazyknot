@@ -2,6 +2,7 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface Internship {
   title: string;
@@ -119,7 +120,7 @@ const InternshipPage: NextPage = () => {
               className="bg-white rounded-3xl shadow-[0_20px_35px_-8px_rgba(0,0,0,0.08),0_10px_15px_-6px_rgba(0,0,0,0.02)] overflow-hidden border border-gray-100/80 transition-all hover:shadow-2xl hover:-translate-y-1 duration-300 flex flex-col"
             >
               {/* Image Section - Full fill with object-cover */}
-              <div className="relative h-90 sm:h-98 // hight of image  md:h-90 lg:h-90 //width of image  w-full bg-gradient-to-br from-indigo-500 to-sky-40 overflow-hidden">
+              <div className="relative h-90 sm:h-98 md:h-90 lg:h-90 w-full bg-gradient-to-br from-indigo-500 to-sky-40 overflow-hidden">
                 <Image
                   src={internship.image}
                   alt={internship.alt}
@@ -159,7 +160,7 @@ const InternshipPage: NextPage = () => {
                 </div>
               </div>
 
-              {/* Bottom Section: Includes, Validity, Features */}
+              {/* Bottom Section: Includes, Validity, Features, and Enroll Button */}
               <div className="px-4 sm:px-5 md:px-6 pb-4 sm:pb-5 pt-3 border-t border-[#e9eef4] bg-slate-50/40 rounded-b-3xl">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-[10px] sm:text-xs">
                   <div>
@@ -189,6 +190,30 @@ const InternshipPage: NextPage = () => {
                       <span className="text-green-600">●</span> {feature}
                     </span>
                   ))}
+                </div>
+                
+                {/* Enroll Now Button */}
+                <div className="mt-3 sm:mt-4">
+                  <Link
+                    href="/contact"
+                    className="w-full inline-flex items-center justify-center px-4 py-2.5 sm:py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm sm:text-base font-semibold rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    <span>Enroll Now</span>
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      className="h-4 w-4 sm:h-5 sm:w-5 ml-2" 
+                      fill="none" 
+                      viewBox="0 0 24 24" 
+                      stroke="currentColor"
+                    >
+                      <path 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round" 
+                        strokeWidth={2} 
+                        d="M14 5l7 7m0 0l-7 7m7-7H3" 
+                      />
+                    </svg>
+                  </Link>
                 </div>
               </div>
             </div>
