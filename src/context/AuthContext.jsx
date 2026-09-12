@@ -1,6 +1,6 @@
 'use client';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { auth, signInWithPopup, googleProvider, signOut } from '@/lib/firebase';
+import { getFirebaseAuth, getGoogleProvider, signInWithPopup, signOut } from '@/lib/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 
 const AuthContext = createContext({});
@@ -12,6 +12,7 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const auth = getFirebaseAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser({
@@ -31,6 +32,8 @@ export function AuthProvider({ children }) {
 
   const signInWithGoogle = async () => {
     try {
+      const auth = getFirebaseAuth();
+      const googleProvider = getGoogleProvider();
       const result = await signInWithPopup(auth, googleProvider);
       return result.user;
     } catch (error) {
@@ -41,6 +44,7 @@ export function AuthProvider({ children }) {
 
   const logout = async () => {
     try {
+      const auth = getFirebaseAuth();
       await signOut(auth);
     } catch (error) {
       console.error("Error signing out:", error);

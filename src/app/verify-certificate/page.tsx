@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useVerifyCertificateBySlNo } from "../hooks/useverifycertificate";
 import { CertificateWithId } from "../types/verify-certificate.types";
-import { Timestamp } from "firebase/firestore";
+import type { Timestamp } from "firebase/firestore";
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 

@@ -14,17 +14,18 @@ const firebaseConfig = {
 };
 // Initialize Firebase (prevents multiple initialization errors)
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
-const googleProvider = new GoogleAuthProvider();
+
+const getFirebaseAuth = () => getAuth(app);
+const getGoogleProvider = () => new GoogleAuthProvider();
 
 export { 
   app, 
-  auth, 
   db, 
   storage, 
-  googleProvider,
+  getFirebaseAuth,
+  getGoogleProvider,
   // Auth methods
   signInWithPopup, 
   signOut,
