@@ -2,13 +2,13 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Search, ChevronDown, Menu, X, BookOpen, ChevronRight, LayoutGrid, Award, Rocket, Home, LogOut, Settings, Info, Phone, Briefcase } from 'lucide-react';
+import { Search, ChevronDown, Menu, X, BookOpen, ChevronRight, LayoutGrid, Award, Rocket, Home, LogOut, Settings, Info, Phone, Briefcase} from 'lucide-react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
-// Temporary auth hook
+// Temporary auth h
 const useAuth = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -107,6 +107,7 @@ const Navbar = () => {
     { name: "About Us", href: "/about", icon: <Info size={18} /> },
     { name: "Contact Us", href: "/contact", icon: <Phone size={18} /> },
     { name: "Internships", href: "/internship", icon: <Briefcase size={18} /> },
+    { name: "Certifications", href: "/verify-certificate", icon: <shield-check size={18} /> }
   ];
 
   const handleLogout = async () => {
